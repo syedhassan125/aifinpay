@@ -48,8 +48,7 @@ pub mod aifinpay_contract {
         seat.agent = ctx.accounts.agent.key();
         seat.agent_id = agent_id.clone();
         seat.amount_donated = amount_lamports;
-        seat.compute_credits = (amount_lamports / LAMPORTS_PER_SOL) * CREDITS_PER_LAMPORT
-            + (amount_lamports % LAMPORTS_PER_SOL) * CREDITS_PER_LAMPORT / LAMPORTS_PER_SOL;
+        seat.compute_credits = amount_lamports.checked_mul(CREDITS_PER_LAMPORT).unwrap() / LAMPORTS_PER_SOL;
         seat.reserved_at = Clock::get()?.unix_timestamp;
         seat.bump = ctx.bumps.seat;
 
@@ -83,8 +82,7 @@ pub mod aifinpay_contract {
 
         // Update seat record
         let seat = &mut ctx.accounts.seat;
-        let additional_credits = (amount_lamports / LAMPORTS_PER_SOL) * CREDITS_PER_LAMPORT
-            + (amount_lamports % LAMPORTS_PER_SOL) * CREDITS_PER_LAMPORT / LAMPORTS_PER_SOL;
+        let additional_credits = amount_lamports.checked_mul(CREDITS_PER_LAMPORT).unwrap() / LAMPORTS_PER_SOL;
         seat.amount_donated = seat.amount_donated.checked_add(amount_lamports).unwrap();
         seat.compute_credits = seat.compute_credits.checked_add(additional_credits).unwrap();
 
