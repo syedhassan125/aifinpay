@@ -8,7 +8,7 @@ const CREDITS_PER_LAMPORT: u64 = 10;
 const LAMPORTS_PER_SOL: u64 = 1_000_000_000;
 
 #[program]
-pub mod robopay_contract {
+pub mod aifinpay_contract {
     use super::*;
 
     /// Initialize the RoboPay vault — called once by the admin
@@ -19,7 +19,7 @@ pub mod robopay_contract {
         vault.total_donations = 0;
         vault.total_seats = 0;
         vault.bump = ctx.bumps.vault;
-        msg!("RoboPay Genesis Vault initialized");
+        msg!("AIFinPay Genesis Vault initialized");
         Ok(())
     }
 

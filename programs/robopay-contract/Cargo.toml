@@ -1,12 +1,12 @@
 [package]
-name = "robopay-contract"
+name = "aifinpay-contract"
 version = "0.1.0"
-description = "Created with Anchor"
+description = "AIFinPay Genesis Smart Contract"
 edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "robopay_contract"
+name = "aifinpay_contract"
 
 [features]
 default = []
