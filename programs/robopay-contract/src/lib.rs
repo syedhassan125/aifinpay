@@ -3,7 +3,7 @@ use anchor_lang::system_program;
 use anchor_spl::token::{self, Token, TokenAccount, Transfer as SplTransfer};
 use pyth_solana_receiver_sdk::price_update::{get_feed_id_from_hex, PriceUpdateV2};
 
-declare_id!("7nK7wieuJuwexXyCWd8D2SEUeRsNbyLGa2u5EQnDmFfP");
+declare_id!("5g9zWHF1Vv6GiGpA2ZbJQbSCDZd5hAk9AyvabRJvKFx2");
 
 // mCredits: $1 USD = 100 mCredits (1 cent = 1 mCredit)
 const MCREDITS_PER_USD_CENT: u64 = 1;
