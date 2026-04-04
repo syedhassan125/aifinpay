@@ -9,7 +9,7 @@ declare_id!("5g9zWHF1Vv6GiGpA2ZbJQbSCDZd5hAk9AyvabRJvKFx2");
 const MCREDITS_PER_USD_CENT: u64 = 1;
 const LAMPORTS_PER_SOL: u64     = 1_000_000_000;
 const SPL_DECIMALS: u64         = 1_000_000;   // USDC + USDT both 6 decimals
-const MIN_USD_CENTS: u64        = 50;           // $0.50 minimum donation
+const MIN_USD_CENTS: u64        = 100;          // $1.00 minimum donation
 const PYTH_MAX_STALENESS: u64   = 60;           // 60 seconds
 
 // Pyth chain-agnostic feed ID for SOL/USD
@@ -495,7 +495,7 @@ pub struct TopUpSpl<'info> {
 
 #[error_code]
 pub enum ErrorCode {
-    #[msg("Minimum donation is $0.50 USD equivalent")]
+    #[msg("Minimum donation is $1.00 USD equivalent")]
     DonationTooSmall,
     #[msg("Agent ID must be 64 characters or less")]
     AgentIdTooLong,
