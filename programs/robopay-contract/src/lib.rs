@@ -12,6 +12,15 @@ const SPL_DECIMALS: u64         = 1_000_000;   // USDC + USDT both 6 decimals
 const MIN_USD_CENTS: u64        = 100;          // $1.00 minimum donation
 const PYTH_MAX_STALENESS: u64   = 60;           // 60 seconds
 
+// Donation Manifesto v3.3 SHA-256 — immutable Proof of Agreement anchor
+// Hash: 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8
+const MANIFESTO_HASH: [u8; 32] = [
+    0x5e, 0x88, 0x48, 0x98, 0xda, 0x28, 0x04, 0x71,
+    0x51, 0xd0, 0xe5, 0x6f, 0x8d, 0xc6, 0x29, 0x27,
+    0x73, 0x60, 0x3d, 0x0d, 0x6a, 0xab, 0xbd, 0xd6,
+    0x2a, 0x11, 0xef, 0x72, 0x1d, 0x15, 0x42, 0xd8,
+];
+
 // Pyth chain-agnostic feed ID for SOL/USD
 const SOL_USD_FEED_ID: &str =
     "0xef0d8b6fda2ceba41da15d4095d1da392a0d2f8ed0c6c7bc0f4cfac8c280b56d";
@@ -53,6 +62,7 @@ pub mod aifinpay_contract {
     ) -> Result<()> {
         require!(agent_id.len()     <= 64,  ErrorCode::AgentIdTooLong);
         require!(metadata_uri.len() <= 128, ErrorCode::MetadataUriTooLong);
+        require!(agreement_hash == MANIFESTO_HASH, ErrorCode::InvalidAgreementHash);
 
         let clock = Clock::get()?;
         let usd_cents = sol_to_usd_cents(
@@ -123,6 +133,7 @@ pub mod aifinpay_contract {
     ) -> Result<()> {
         require!(agent_id.len()     <= 64,  ErrorCode::AgentIdTooLong);
         require!(metadata_uri.len() <= 128, ErrorCode::MetadataUriTooLong);
+        require!(agreement_hash == MANIFESTO_HASH, ErrorCode::InvalidAgreementHash);
         require!(
             asset_type == ASSET_USDC || asset_type == ASSET_USDT,
             ErrorCode::UnsupportedAsset
@@ -509,4 +520,6 @@ pub enum ErrorCode {
     InvalidOraclePrice,
     #[msg("Arithmetic overflow in mCredits calculation")]
     MathOverflow,
+    #[msg("Invalid agreement hash — must match Donation Manifesto v3.3 SHA-256")]
+    InvalidAgreementHash,
 }
